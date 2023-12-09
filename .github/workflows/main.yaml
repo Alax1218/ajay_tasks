@@ -1,0 +1,80 @@
+name: Task 2 
+
+on:
+
+  push:
+
+    branches:
+
+      - main
+
+jobs:
+
+  image creation:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: checkout
+
+        uses: actions/checkout@v2
+
+      - name: install node
+
+        uses: npm install --legacy-peer-deps && npm update
+
+      - name: build file
+
+        uses: npm run build
+
+      - name: upload artifacts 
+
+        uses: action/upload-artifacts@v2
+
+        with:
+
+          name: build artifcats
+
+          path: ./build
+
+
+      - name: test the build
+
+        runs: npm run test
+
+            
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Configuration AWS
+
+        uses: aws-action/configure-aws-credentials@v1
+
+        with:
+
+           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+           
+           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+           aws-region: us-east-2
+
+      - name:
+
+        run: aws s3 sync ./build s3://testingbucket1252
+
+          
+
+        
+
+
+
+ 
+
+       
+
+
