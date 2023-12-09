@@ -17,13 +17,13 @@ jobs:
     steps:
 
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: install node
-        uses: npm install --legacy-peer-deps && npm update
+        run: npm install --legacy-peer-deps && npm update
 
       - name: build file
-        uses: npm run build
+        run: npm run build
 
       - name: upload artifacts 
         uses: actions/upload-artifacts@v2
@@ -37,7 +37,7 @@ jobs:
 
       - name: test the build
 
-        runs: npm run test
+        run: npm run test
 
             
 
