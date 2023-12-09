@@ -19,12 +19,12 @@ jobs:
 
      - name: Install dependencies
        run: npm install --legacy-peer-deps && npm update
-
+     - name: test 
+       run: npm run test
+       
      - name: Build static file
        run: CI=false npm run build 
        
-     - name: Test build
-       run: npm test
        
      - name: Upload artifacts
        uses: actions/upload-artifact@v2
@@ -41,4 +41,4 @@ jobs:
          aws-region: us-east-2
 
      - name: Deploy static site to S3 bucket
-       run: aws s3 sync ./build s3://testingbucket1252
+       run: aws s3 sync ./build s3://testingbucket1252/EvolveFiles/
