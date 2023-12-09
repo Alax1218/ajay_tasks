@@ -1,76 +1,40 @@
-name: Task 2 
+# This is a basic workflow that is manually triggered
 
-on:
+name: s3test
 
-  push:
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on: push
 
-    branches:
-
-      - main
 
 jobs:
+ Deploy:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout
+       uses: actions/checkout@v2
 
-  image_creation:
+     - name: Setup node
+       uses: actions/setup-node@v2
 
-    runs-on: ubuntu-latest
+     - name: Install dependencies
+       run: npm install --legacy-peer-deps && npm update
 
-    steps:
+     - name: Build static file
+       run: CI=false npm run build 
 
-      - name: checkout
-        uses: actions/checkout@v4
+     - name: Upload artifacts
+       uses: actions/upload-artifact@v2
+       with:
+         name: build-artifact
+         path: ./build
 
-      - name: install node
-        run: npm install --legacy-peer-deps && npm update
+     - name: Configure AWS Credentials
+       uses: aws-actions/configure-aws-credentials@v1
+       with:
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws-region: us-east-2
 
-      - name: build file
-        run: npm run build
-
-      - name: upload artifacts 
-        uses: actions/upload-artifacts@v2
-
-        with:
-
-          name: build artifcats
-
-          path: ./build
-
-
-      - name: test the build
-
-        run: npm run test
-
-            
-
-  deploy:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Configuration AWS
-
-        uses: aws-action/configure-aws-credentials@v1
-
-        with:
-
-           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-           
-           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-           aws-region: us-east-2
-
-      - name:
-
-        run: aws s3 sync ./build s3://testingbucket1252
-
-          
-
-        
-
-
-
- 
-
-       
-
-
+     - name: Deploy static site to S3 bucket
+       run: aws s3 sync ./build s3://testingbucket1252
