@@ -18,8 +18,8 @@ jobs:
           PREV_SHA=$(git rev-parse HEAD~)
           CURR_SHA=$(git rev-parse HEAD)
           echo "Previous commit SHA: ${{ PREV_SHA }}"
-          echo "Current commit SHA: ${{ CURR_SHA }}
-            "
+          echo "Current commit SHA: ${{ CURR_SHA }}"
+            
       - name: Get file changes
         run: |
           git diff --name-only ${{ PREV_SHA }} ${{ CURR_SHA }} -- "./file1"
