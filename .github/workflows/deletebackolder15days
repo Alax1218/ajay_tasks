@@ -2,7 +2,7 @@ name: Backup and Cleanup
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Run daily at midnight
+    - cron: '10 20 * * *' # Run daily at midnight
 
 jobs:
   backup-and-cleanup:
