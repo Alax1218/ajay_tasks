@@ -1,0 +1,35 @@
+name: Find File Changes
+
+on:
+  push:
+
+jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+        with:
+          fetch-depth: 2 # Fetch both commits
+
+      - name: Get commit SHAs
+        run: |
+          PREV_SHA=$(git rev-parse HEAD~)
+          CURR_SHA=$(git rev-parse HEAD)
+          echo "Previous commit SHA: ${{ PREV_SHA }}"
+          echo "Current commit SHA: ${{ CURR_SHA }}
+            "
+      - name: Get file changes
+        run: |
+          git diff --name-only ${{ PREV_SHA }} ${{ CURR_SHA }} -- "./file1"
+          # Replace "$FILE" with the actual file path
+
+      - name: Output changed files
+        if: steps.get_file_changes.outputs == '1'
+          run: |
+            echo "File changed: ${{ steps.get_file_changes.outputs }}"
+
+        else
+          run: |
+            echo "File not changed."
