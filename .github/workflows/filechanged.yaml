@@ -1,9 +1,6 @@
 name: Find File Changes
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 jobs:
   find-changes:
