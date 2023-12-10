@@ -34,12 +34,11 @@ jobs:
         with:
           server_address: smtp.gmail.com
           server_port: 587
-          username: ${{ secrets.ajlxmi1218 }}
-          password: ${{ secrets.Alax@@1218 }}
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_PASSWORD }}
           to: ajlxmi1218@gmail.com
           subject: File Changes
           body: |
             Changes in file1:
 
             $CHANGES
-
