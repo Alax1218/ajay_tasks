@@ -17,7 +17,7 @@ jobs:
 
       - name: Set commit SHAs
         run: |
-          PREV_SHA=$(git rev-parse HEAD~2)
+          PREV_SHA=$(git log -n 3 --format="%H" | sed -n '2p')
           CURR_SHA=$(git rev-parse HEAD)
           echo "Previous commit SHA: $PREV_SHA"
           echo "Current commit SHA: $CURR_SHA"
