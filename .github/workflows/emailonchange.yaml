@@ -42,4 +42,4 @@ jobs:
           body: |
             Changes in file1:
 
-            $CHANGES
+            ${{ steps.show_content.outputs.stdout }}.
