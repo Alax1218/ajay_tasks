@@ -27,4 +27,4 @@ jobs:
           echo "$CHANGES"
 
       - name: Display changes
-        run: echo "Changes in file1: $CHANGES"
+        run: echo "Changes in file1:$CHANGES"
