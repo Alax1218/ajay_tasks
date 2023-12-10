@@ -28,3 +28,6 @@ jobs:
 
       - name: Display changes
         run: echo "Changes in file1:$CHANGES"
+
+      - name: show content
+        run: git show $CURR_SHA:file1
