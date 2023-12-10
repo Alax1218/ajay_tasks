@@ -1,35 +1,26 @@
-name: Find File Changes
+name: Find Changed Files
 
 on:
   push:
-    branches:
-      - main
 
 jobs:
   check-changes:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+
         with:
           fetch-depth: 2 # Fetch both commits
 
-      - name: Set commit SHAs
+      - name: Get commit SHAs
         run: |
-          PREV_SHA=$(git log -n 3 --format="%H" | sed -n '2p')
+          PREV_SHA=$(git rev-parse HEAD~)
           CURR_SHA=$(git rev-parse HEAD)
-          echo "Previous commit SHA: $PREV_SHA"
-          echo "Current commit SHA: $CURR_SHA"
-
-      - name: Get file changes
+          echo "Previous commit SHA: ${{ PREV_SHA }}"
+          echo "Current commit SHA: ${{ CURR_SHA }}"
+      - name: Get changed files
         run: |
-          CHANGES=$(git diff --name-status $PREV_SHA $CURR_SHA -- "./file1")
-          echo "Changes in file1: $CHANGES"
-
-      - name: Display changes
-        if: steps.get_file_changes.outputs['file-changed'] == '1'
+          git diff --name-only ${{ PREV_SHA }} ${{ CURR_SHA }}
+      - name: Output changed files
         run: |
-          echo "File changed: ${{ steps.get_file_changes.outputs.file-changed }}"
-          echo "Changes made in file1:"
-          echo "$CHANGES"
+          for file in ${{ steps.get_changed_files.outputs.files }}; do echo "$file"; done
