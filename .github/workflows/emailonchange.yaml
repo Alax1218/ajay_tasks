@@ -41,5 +41,4 @@ jobs:
           subject: File Changes
           body: |
             Changes in file1:
-
-            ${{ steps.show_content.outputs.stdout }}.
+            ${{ steps.show_content.outputs.stdout }}
