@@ -27,7 +27,8 @@ jobs:
           echo "$CHANGES"
 
       - name: Show content
-        run: git show $CURR_SHA:file1
+        run: | 
+          CHANGES_1=$(git show $CURR_SHA:file1)
 
       - name: Send email via Gmail
         uses: dawidd6/action-send-mail@v2
@@ -42,4 +43,4 @@ jobs:
           body: |
             Changes in file1:
 
-            $CHANGES
+            $CHANGES_1
