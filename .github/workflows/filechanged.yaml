@@ -27,9 +27,5 @@ jobs:
 
       - name: Output changed files
         if: steps.get_file_changes.outputs == '1'
-          run: |
-            echo "File changed: ${{ steps.get_file_changes.outputs }}"
-
-        else
-          run: |
-            echo "File not changed."
+        run: |
+          echo "File changed: ${{ steps.get_file_changes.outputs }}"
