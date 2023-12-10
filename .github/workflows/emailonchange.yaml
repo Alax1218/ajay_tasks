@@ -27,7 +27,9 @@ jobs:
           echo "$CHANGES"
 
       - name: Show content
-        run: git show $CURR_SHA:file1
+        id: show_content
+        run: echo "$(git show $CURR_SHA:file1)" > show_content.txt
+       #run: git show $CURR_SHA:file1
 
       - name: Send email via Gmail
         uses: dawidd6/action-send-mail@v2
@@ -41,4 +43,4 @@ jobs:
           subject: File Changes
           body: |
             Changes in file1:
-            ${{ steps.show_content.outputs.stdout }}
+            $(cat show_content.txt)
