@@ -39,7 +39,7 @@ jobs:
           from: ajlxmi1218@gmail.com
           to: ajlxmi1218@gmail.com
           subject: File Changes
-          body: >
+          body: |
             Changes in file1:
 
             ${{CHANGES}}
