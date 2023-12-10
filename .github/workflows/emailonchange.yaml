@@ -42,4 +42,4 @@ jobs:
           body: >
             Changes in file1:
 
-            ${{CHANGES_1}}
+            ${{CHANGES}}
