@@ -1,0 +1,43 @@
+name: Backup and Cleanup
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight
+
+jobs:
+  backup-and-cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2 # Change to your desired region
+
+      - name: Run backup script
+        run: ./backup_script.sh
+
+      - name: List backups
+        run: |
+          BACKUP_DIR="/etc"
+          ls $BACKUP_DIR
+
+      - name: Cleanup old backups
+        run: |
+          BACKUP_DIR="/home/ec2-user/devdatabase"
+          # Delete backups older than 15 days
+          find $BACKUP_DIR -name "*.tar.gz" -type f -mtime +15 -exec rm {} \;
+
+      - name: List remaining backups
+        run: |
+          BACKUP_DIR="/path/to/backup"
+          ls $BACKUP_DIR
+
+      - name: Cleanup old backups in S3
+        run: |
+          aws s3 rm --recursive s3://s3://testingbucket1252/DataBackupIFile/ --exclude "*" --include "*.tar.gz" --quiet
