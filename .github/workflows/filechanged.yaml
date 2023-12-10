@@ -2,6 +2,8 @@ name: Find File Changes
 
 on:
   push:
+    branches:
+      - main
 
 jobs:
   check-changes:
@@ -15,8 +17,8 @@ jobs:
 
       - name: Set commit SHAs
         run: |
-          export PREV_SHA=$(git rev-parse HEAD~)
-          export CURR_SHA=$(git rev-parse HEAD)
+          PREV_SHA=$(git rev-parse HEAD~2)
+          CURR_SHA=$(git rev-parse HEAD)
           echo "Previous commit SHA: $PREV_SHA"
           echo "Current commit SHA: $CURR_SHA"
 
@@ -33,3 +35,5 @@ jobs:
         if: steps.get_file_changes.outputs['file-changed'] == '1'
         run: |
           echo "File changed: ${{ steps.get_file_changes.outputs.file-changed }}"
+          echo "Changes made in file1:"
+          git diff $PREV_SHA $CURR_SHA -- "./file1"
