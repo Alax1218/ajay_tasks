@@ -27,8 +27,7 @@ jobs:
           echo "$CHANGES"
 
       - name: Show content
-        id: show_content
-        run: echo "::set-output name=content::$(git show $CURR_SHA:file1 | base64)"
+        run: git show $CURR_SHA:file1
 
       - name: Send email via Gmail
         uses: dawidd6/action-send-mail@v2
@@ -42,4 +41,4 @@ jobs:
           subject: File Changes
           body: |
             Changes in file1:
-            $(echo "${{ steps.show_content.outputs.content }}" | base64 --decode).
+            ${{ steps.show_content.outputs.stdout }}
