@@ -1,9 +1,6 @@
 name: Find File Changes and Send Email
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 jobs:
   find-changes-and-send-email:
