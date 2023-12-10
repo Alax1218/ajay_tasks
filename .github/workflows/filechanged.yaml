@@ -27,10 +27,6 @@ jobs:
           CHANGES=$(git diff --name-only $PREV_SHA $CURR_SHA -- "./file1")
           echo "Changes in file1: $CHANGES"
 
-      - name: Output changed files
-        id: get_file_changes
-        run: echo "file-changed=1" >> $GITHUB_ENV
-
       - name: Display changes
         if: steps.get_file_changes.outputs['file-changed'] == '1'
         run: |
