@@ -36,6 +36,7 @@ jobs:
           server_port: 587
           username: ${{ secrets.GMAIL_USERNAME }}
           password: ${{ secrets.GMAIL_PASSWORD }}
+          from: ajlxmi1218@gmail.com
           to: ajlxmi1218@gmail.com
           subject: File Changes
           body: |
