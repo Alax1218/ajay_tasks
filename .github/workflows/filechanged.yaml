@@ -24,7 +24,7 @@ jobs:
 
       - name: Get file changes
         run: |
-          CHANGES=$(git diff $PREV_SHA $CURR_SHA -- "./file1")
+          CHANGES=$(git diff --name-status $PREV_SHA $CURR_SHA -- "./file1")
           echo "Changes in file1: $CHANGES"
 
       - name: Display changes
