@@ -1,8 +1,7 @@
 name: Backup and Cleanup
 
-on:
-  schedule:
-    - cron: '45 10 * * *' # Run daily at midnight
+on: push
+  
 
 jobs:
   backup-and-cleanup:
