@@ -1,8 +1,8 @@
 name: Delete Old Data from S3
 
-on:
-  schedule:
-    - cron: '10 0 * * *'  # Run daily at midnight
+on: push
+
+
 
 jobs:
   delete-old-data:
