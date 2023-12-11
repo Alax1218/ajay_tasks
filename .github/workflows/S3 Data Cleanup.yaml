@@ -25,7 +25,7 @@ jobs:
 
       - name: Get date 15 days ago
         run: |
-          export DATE_15_DAYS_AGO=$(date -d "3 days ago" +%Y-%m-%d)
+          export DATE_15_DAYS_AGO=$(date -d "1 days ago" +%Y-%m-%d)
 
       - name: List files older than 15 days
         run: |
