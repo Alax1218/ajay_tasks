@@ -19,8 +19,9 @@ jobs:
           aws-region: us-east-2 # Change to your desired region
 
       - name: Define target bucket
+        id: set_bucket
         run: |
-          export BUCKET_NAME="testingbucket1252"
+          echo "::set-output name=BUCKET_NAME::testingbucket1252"
 
       - name: Get date 15 days ago
         run: |
