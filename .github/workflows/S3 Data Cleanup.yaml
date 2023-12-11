@@ -1,0 +1,41 @@
+name: S3 Data Cleanup
+
+on: push
+  
+
+jobs:
+  cleanup-old-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2 # Change to your desired region
+
+      - name: Define target bucket
+        run: |
+          export BUCKET_NAME="testingbucket1252"
+
+      - name: Get date 15 days ago
+        run: |
+          export DATE_15_DAYS_AGO=$(date -d "15 days ago" +%Y-%m-%d)
+
+      - name: List files older than 15 days
+        run: |
+          aws s3 ls --no-summary --bucket $BUCKET_NAME | awk '$1 ~ /.*\/'$DATE_15_DAYS_AGO'/ { print $4 }' | xargs -n 1 > files_to_delete.txt
+
+      - name: Delete files older than 15 days
+        run: |
+          if [ -f files_to_delete.txt ]; then
+            aws s3 rm --recursive s3://$BUCKET_NAME/ --exclude "*" --include "*.txt" < files_to_delete.txt
+          fi
+
+      - name: Clean up temporary files
+        run: |
+          rm files_to_delete.txt
