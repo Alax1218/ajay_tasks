@@ -2,7 +2,7 @@ name: Backup and Cleanup
 
 on:
   schedule:
-    - cron: '25 01 * * *' # Run daily at midnight
+    - cron: '38 10 * * *' # Run daily at midnight
 
 jobs:
   backup-and-cleanup:
@@ -33,11 +33,7 @@ jobs:
           # Delete backups older than 15 days
           find $BACKUP_DIR -name "*.tar.gz" -type f -mtime +15 -exec rm {} \;
 
-      - name: List remaining backups
-        run: |
-          BACKUP_DIR="/path/to/backup"
-          ls $BACKUP_DIR
-
+     
       - name: Cleanup old backups in S3
         run: |
           aws s3 rm --recursive s3://s3://testingbucket1252/DataBackupIFile/ --exclude "*" --include "*.tar.gz" --quiet
