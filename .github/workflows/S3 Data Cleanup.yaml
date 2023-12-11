@@ -29,12 +29,12 @@ jobs:
 
       - name: List files older than 15 days
         run: |
-          aws s3 ls --no-summary --bucket $BUCKET_NAME | awk '$1 ~ /.*\/'$DATE_15_DAYS_AGO'/ { print $4 }' | xargs -n 1 > files_to_delete.txt
+          aws s3 ls --no-summary --bucket $BUCKET_NAME | awk '$1 ~ /.*\/'$DATE_1_DAYS_AGO'/ { print $4 }' | xargs -n 1 > files_to_delete.txt
 
       - name: Delete files older than 15 days
         run: |
           if [ -f files_to_delete.txt ]; then
-            aws s3 rm --recursive s3://testingbucket1252/ --exclude "*" --include "*.txt" < files_to_delete.txt
+            aws s3 rm --recursive s3://testingbucket1252/DataBackupIFile/ --exclude "*" --include "*.txt" < files_to_delete.txt
           fi
 
       - name: Clean up temporary files
