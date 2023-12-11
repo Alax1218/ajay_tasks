@@ -20,7 +20,7 @@ jobs:
       - name: Debug
         run: |
           echo "Contents of the remote directory:"
-          ssh -i private_key.pem ec2-user@${{ secrets.EC2_PUBLIC_IP }} "ls -la /home/ec2-user/"
+          ssh -i testingcicd.pem ec2-user@${{ secrets.EC2_PUBLIC_IP }} "ls -la /home/ec2-user/"
 
       - name: Run backup script on remote server
         run: |
