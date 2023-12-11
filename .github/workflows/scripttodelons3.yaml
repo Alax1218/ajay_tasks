@@ -17,6 +17,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2 # Change to your desired region
 
+      - name: Debug
+        run: |
+          echo "Contents of the remote directory:"
+          ssh -i private_key.pem ec2-user@${{ secrets.EC2_PUBLIC_IP }} "ls -la /home/ec2-user/"
+
       - name: Run backup script on remote server
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
