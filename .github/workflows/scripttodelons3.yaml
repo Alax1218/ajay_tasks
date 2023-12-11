@@ -24,9 +24,9 @@ jobs:
 
       - name: Run backup script on remote server
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > testingcicd.pem
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > devopstesting.pem
           chmod 600 private_key.pem
-          ssh -i testingcicd.pem ec2-user@${{ secrets.EC2_PUBLIC_IP }} "bash -s" < /home/ec2-user/backup_script.sh
+          ssh -i devopstesting.pem ec2-user@${{ secrets.EC2_PUBLIC_IP }} "bash -s" < /home/ec2-user/backup_script.sh
 
       - name: List backups
         run: |
