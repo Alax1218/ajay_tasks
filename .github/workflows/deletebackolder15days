@@ -36,4 +36,4 @@ jobs:
      
       - name: Cleanup old backups in S3
         run: |
-          aws s3 rm --recursive s3://s3://testingbucket1252/DataBackupIFile/ --exclude "*" --include "*.tar.gz" --quiet
+          aws s3 rm --recursive s3://testingbucket1252/DataBackupIFile/ --exclude "*" --include "*.tar.gz" --quiet
