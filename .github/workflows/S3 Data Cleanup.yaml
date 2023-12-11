@@ -34,7 +34,7 @@ jobs:
       - name: Delete files older than 15 days
         run: |
           if [ -f files_to_delete.txt ]; then
-            aws s3 rm --recursive s3://$BUCKET_NAME/ --exclude "*" --include "*.txt" < files_to_delete.txt
+            aws s3 rm --recursive s3://testingbucket1252/ --exclude "*" --include "*.txt" < files_to_delete.txt
           fi
 
       - name: Clean up temporary files
