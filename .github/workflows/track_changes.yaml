@@ -24,7 +24,7 @@ jobs:
     - name: Use changes.txt in subsequent steps
       run: |
         # Access the contents of changes.txt using the variable syntax
-          cat ${{ steps.display-changes.outputs.changes-file }}
+          cat ${{ steps.display-changes.outputs.changes.text }}
        
 
   sending-mail:
