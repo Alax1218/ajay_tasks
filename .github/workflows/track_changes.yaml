@@ -19,6 +19,7 @@ jobs:
       run: |
         echo "Changed files:"
 
-        git diff --name-only ${{ github.event.before }} ${{ github.sha }}
+        BASE_COMMIT=${{ github.event.before || 'HEAD^' }}
+        git diff $BASE_COMMIT ${{ github.sha }}
 
 
