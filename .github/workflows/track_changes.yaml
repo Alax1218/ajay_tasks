@@ -24,6 +24,8 @@ jobs:
 
   sending-mail:
 
+    runs-on: ubuntu-latest
+
     steps:
     
     - name: Send email notification
