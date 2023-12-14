@@ -26,7 +26,7 @@ jobs:
       - name: debug s3 data
         run: |
           aws s3 ls s3://testingbucket1252/
-          aws s3 ls s3://testingbucket1252/$(date -d '4 days ago' '+%Y-%m-%d')/
+          aws s3 ls s3://testingbucket1252/$(date -d '4 days ago' '+%Y-%m-%d')
 
       - name: Delete old data in S3
         run: |
