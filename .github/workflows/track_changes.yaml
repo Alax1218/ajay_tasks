@@ -24,7 +24,7 @@ jobs:
     steps:
     
     - name: Send email notification
-      uses: dawidd6/action-send-mail@v2  
+      uses: dawidd6/action-send-mail@v3  
       with:
         server_address: smtp.gmail.com    #${{ secrets.SMTP_SERVER }}
         server_port: 587   #${{ secrets.SMTP_PORT }}
