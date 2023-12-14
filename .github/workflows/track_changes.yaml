@@ -23,7 +23,9 @@ jobs:
         git diff $BASE_COMMIT ${{ github.sha }} > changes.txt
 
     - name: change.txt path
-      run: ls -l && pwd 
+      run: |
+        ls -l 
+        cat changes.txt
 
   sending-mail:
 
