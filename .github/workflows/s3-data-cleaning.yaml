@@ -1,0 +1,16 @@
+name: Delete Old Data from S3
+
+on: push
+
+  
+jobs:
+  delete-old-data:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up AWS CLI
+      run: aws configure set region us-east-2
+
+    - name: Delete old data in S3
+      run: |
+        aws s3 rm s3://testingbucket1252 --recursive --exclude "*" --include "$(date -d '15 days ago' '+%Y-%m-%d')/*"
