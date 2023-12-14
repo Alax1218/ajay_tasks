@@ -1,6 +1,6 @@
-name: S3 Data Cleanup
+name: buket clening
 
-on: workflow_dispatch
+on: push
   
 
 jobs:
