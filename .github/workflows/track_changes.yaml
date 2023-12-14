@@ -31,8 +31,8 @@ jobs:
         username: ${{ secrets.ajlxmi121 }}
         password: ${{ secrets.Alax@@1218 }}
         subject: "Changes in the Repository"
-        to: kumarsaini1th@gmail.com   #${{ secrets.NOTIFICATION_EMAIL }}
-        from: ajlxmi1218@gmail.com  #${{ secrets.SMTP_USERNAME }}
+        to: ajlxmi1218@gmail.com    #${{ secrets.NOTIFICATION_EMAIL }}
+        from: kumarsaini1th@gmail.com  #${{ secrets.SMTP_USERNAME }}
         body: |
           Changes in the repository:
 
