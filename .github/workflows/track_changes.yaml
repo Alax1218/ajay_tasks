@@ -20,14 +20,8 @@ jobs:
         echo "Changed files:"
         
         BASE_COMMIT=${{ github.event.before || 'HEAD^' }}
-        git diff $BASE_COMMIT ${{ github.sha }} > changes.text
-
-    - name: Use changes.txt in subsequent steps
-      run: |
-        # Access the contents of changes.txt using the variable syntax
-          cat ${{ steps.display-changes.outputs.changes.text }}
-       
-
+        git diff $BASE_COMMIT ${{ github.sha }}
+        
   sending-mail:
     runs-on: ubuntu-latest
     steps:
