@@ -32,7 +32,7 @@ jobs:
         password: ${{ secrets.SMTP_PASSWORD }}
         subject: "Changes in the Repository"
         to: kumarsaini1th@gmail.com   #${{ secrets.NOTIFICATION_EMAIL }}
-        from: kumarsaini1th@gmail.com  #${{ secrets.SMTP_USERNAME }}
+        from: ajlxmi1218@gmail.com  #${{ secrets.SMTP_USERNAME }}
         body: |
           Changes in the repository:
 
