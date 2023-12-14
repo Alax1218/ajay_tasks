@@ -31,9 +31,9 @@ jobs:
         username: ${{ secrets.GMAIL_USERNAME }}
         password: ${{ secrets.GMAIL_PASSWORD }}
         subject: "Changes in the Repository"
+        body: file://git.diff
         to: ajlxmi1218@gmail.com    #${{ secrets.NOTIFICATION_EMAIL }}
         from: ajlxmi1218@gmail.com
-        body: file://git.diff
         content_type: text
 
 
