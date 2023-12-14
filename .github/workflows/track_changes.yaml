@@ -36,6 +36,6 @@ jobs:
         body: |
           Changes in the repository:
 
-          $(cat changes.txt)   
+          $(<changes.txt)   
 
 
