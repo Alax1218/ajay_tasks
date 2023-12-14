@@ -20,12 +20,9 @@ jobs:
         echo "Changed files:"
 
         BASE_COMMIT=${{ github.event.before || 'HEAD^' }}
-        git diff $BASE_COMMIT ${{ github.sha }} > changes.txt
+        git diff $BASE_COMMIT ${{ github.sha }}
 
-    - name: change.txt path
-      run: |
-        ls -l 
-        cat changes.txt
+
 
   sending-mail:
 
