@@ -2,27 +2,23 @@ name: Track Changes
 
 on:
   push:
-    branches:
-      - main  # Adjust the branch name as needed
+    branches: main
+      
 
 jobs:
-  track-changes:
+  build:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        fetch-depth: 2
+        fetch-depth: 0
 
-    - name: Display changes
+    - name: Git difference
       run: |
        git diff ${{ github.event.before }} ${{ github.sha }} > git.diff
-        
-  sending-mail:
-    runs-on: ubuntu-latest
-    steps:
-    
+            
     - name: Send email notification
       uses: dawidd6/action-send-mail@v3  
       with:
