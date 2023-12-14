@@ -1,0 +1,19 @@
+name: Track Changes
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch name as needed
+
+jobs:
+  track-changes:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Display changes
+      run: |
+        echo "Changed files:"
+        git diff --name-only ${{ github.event.before }} ${{ github.sha }}
