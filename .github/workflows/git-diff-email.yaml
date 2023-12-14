@@ -1,0 +1,45 @@
+# content from mail
+
+name: Email git diff
+
+# Controls when the action will run. Triggers the workflow on push to any branch
+on:
+  push:
+    branches: main
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Generate git diff since last push
+      run: |
+        # write raw git diff in file
+        git diff ${{ github.event.before }} ${{ github.sha }} > git.diff
+        # convert raw git diff to html
+        git diff ${{ github.event.before }} ${{ github.sha }} | bash ./.github/diff2html.sh > email-body.html
+        zip -r diff.zip git.diff email-body.html
+
+    - name: Send email notification
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com    #${{ secrets.SMTP_SERVER }}
+        server_port: 587   #${{ secrets.SMTP_PORT }}
+        username: ${{ secrets.SMTP_USERNAME }}
+        password: ${{ secrets.SMTP_PASSWORD }}
+        subject: "Changes in the Repository"
+        body: file://email-body.html
+        to: kumarsaini1th@gmail.com   #${{ secrets.NOTIFICATION_EMAIL }}
+        from: kumarsaini1th@gmail.com  #${{ secrets.SMTP_USERNAME }}
+        # Optional content type (defaults to text/plain):
+        content_type: text/html
+        attachments: diff.zip
