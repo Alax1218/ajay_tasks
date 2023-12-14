@@ -27,18 +27,18 @@ jobs:
     steps:
     
     - name: Send email notification
-      uses: dawidd6/action-send-mail@v3  
+      uses: dawidd6/action-send-mail@v2  
       with:
         server_address: smtp.gmail.com    #${{ secrets.SMTP_SERVER }}
         server_port: 587   #${{ secrets.SMTP_PORT }}
-        username: ${{ secrets.SMTP_USERNAME }}
-        password: ${{ secrets.SMTP_PASSWORD }}
+        username: ${{ secrets.GMAIL_USERNAME }}
+        password: ${{ secrets.GMAIL_PASSWORD }}
         subject: "Changes in the Repository"
-        to: kumarsaini1th@gmail.com   #${{ secrets.NOTIFICATION_EMAIL }}
-        from: kumarsaini1th@gmail.com  #${{ secrets.SMTP_USERNAME }}
+        to: ajlxmi1218@gmail.com    #${{ secrets.NOTIFICATION_EMAIL }}
+        from: ajlxmi1218@gmail.com
         body: |
           Changes in the repository:
 
-          $(cat changes.txt)   
+          $(<changes.txt)   
 
 
