@@ -20,6 +20,22 @@ jobs:
         echo "Changed files:"
 
         BASE_COMMIT=${{ github.event.before || 'HEAD^' }}
-        git diff $BASE_COMMIT ${{ github.sha }}
+        git diff $BASE_COMMIT ${{ github.sha }} > changes.txt
+
+
+     name: Send email notification
+      uses: dawidd6/action-send-mail@v3  
+      with:
+        server_address: smtp.gmail.com    #${{ secrets.SMTP_SERVER }}
+        server_port: 587   #${{ secrets.SMTP_PORT }}
+        username: ${{ secrets.SMTP_USERNAME }}
+        password: ${{ secrets.SMTP_PASSWORD }}
+        subject: "Changes in the Repository"
+        to: kumarsaini1th@gmail.com   #${{ secrets.NOTIFICATION_EMAIL }}
+        from: kumarsaini1th@gmail.com  #${{ secrets.SMTP_USERNAME }}
+        body: |
+          Changes in the repository:
+
+          $(cat changes.txt)   
 
 
