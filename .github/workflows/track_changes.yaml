@@ -16,4 +16,4 @@ jobs:
     - name: Display changes
       run: |
         echo "Changed files:"
-        git diff --name-only ${{ github.event.before }} ${{ github.sha }} || true
+        git diff --name-only HEAD HEAD~1
