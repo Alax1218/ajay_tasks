@@ -20,13 +20,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2 # Change to your desired region
 
-  delete-old-data:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Set up AWS CLI
-      run: aws configure set region us-east-2
-
     - name: Delete old data in S3
       run: |
-        aws s3 rm s3://testingbucket1252 --recursive --exclude "*" --include "$(date -d '15 days ago' '+%Y-%m-%d')/*"
+        aws s3 rm --recursive s3://testingbucket1252/  --exclude "*" --include "$(date -d '15 days ago' '+%Y-%m-%d')/*"
