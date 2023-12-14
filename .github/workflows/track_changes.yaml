@@ -19,13 +19,16 @@ jobs:
       run: |
         
         BASE_COMMIT=${{ github.event.before || 'HEAD^' }}
-        git diff $BASE_COMMIT ${{ github.sha }} 
+        git diff $BASE_COMMIT ${{ github.sha }} > changes.text
+
+    - name: Use changes.txt in subsequent steps
+      run: |
+        # Access the contents of changes.txt using the variable syntax
+          cat ${{ steps.display-changes.outputs.changes-file }}
        
 
   sending-mail:
-
     runs-on: ubuntu-latest
-
     steps:
     
     - name: Send email notification
@@ -41,6 +44,6 @@ jobs:
         body: |
           Changes in the repository:
 
-          $(<changes.txt)   
+          $(changes.txt)   
 
 
