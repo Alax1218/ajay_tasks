@@ -17,7 +17,7 @@ jobs:
 
     - name: Git difference
       run: |
-       git diff ${{ github.event.before }} ${{ github.sha }} > git.diff
+       git diff ${{ github.event.before }} ${{ github.sha }} > changes.diff
             
     - name: Send email notification
       uses: dawidd6/action-send-mail@v3  
@@ -27,7 +27,7 @@ jobs:
         username: ${{ secrets.GMAIL_USERNAME }}
         password: ${{ secrets.GMAIL_PASSWORD }}
         subject: "Changes in the Repository"
-        body: file://git.diff
+        body: file://changes.diff
         to: ajlxmi1218@gmail.com    #${{ secrets.NOTIFICATION_EMAIL }}
         from: ajlxmi1218@gmail.com
         content_type: text
