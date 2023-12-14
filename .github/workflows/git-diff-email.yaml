@@ -26,8 +26,8 @@ jobs:
         # write raw git diff in file
         git diff ${{ github.event.before }} ${{ github.sha }} > git.diff
         # convert raw git diff to html
-        git diff ${{ github.event.before }} ${{ github.sha }} | bash ./.github/diff2html.sh > email-body.html
-        zip -r diff.zip git.diff email-body.html
+        #git diff ${{ github.event.before }} ${{ github.sha }} | bash ./.github/diff2html.sh > email-body.html
+        #zip -r diff.zip git.diff email-body.html
 
     - name: Send email notification
       uses: dawidd6/action-send-mail@v3
@@ -42,4 +42,4 @@ jobs:
         from: kumarsaini1th@gmail.com  #${{ secrets.SMTP_USERNAME }}
         # Optional content type (defaults to text/plain):
         content_type: text/html
-        attachments: diff.zip
+        #attachments: diff.zip
