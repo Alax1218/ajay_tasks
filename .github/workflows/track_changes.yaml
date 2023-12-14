@@ -19,7 +19,7 @@ jobs:
       run: |
         
         BASE_COMMIT=${{ github.event.before || 'HEAD^' }}
-        git diff $BASE_COMMIT ${{ github.sha }} > change.txt
+        git diff $BASE_COMMIT ${{ github.sha }} 
        
 
   sending-mail:
