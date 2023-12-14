@@ -28,8 +28,8 @@ jobs:
       with:
         server_address: smtp.gmail.com    #${{ secrets.SMTP_SERVER }}
         server_port: 587   #${{ secrets.SMTP_PORT }}
-        username: ${{ secrets.SMTP_USERNAME }}
-        password: ${{ secrets.SMTP_PASSWORD }}
+        username: ${{ secrets.ajlxmi121 }}
+        password: ${{ secrets.Alax@@1218 }}
         subject: "Changes in the Repository"
         to: kumarsaini1th@gmail.com   #${{ secrets.NOTIFICATION_EMAIL }}
         from: ajlxmi1218@gmail.com  #${{ secrets.SMTP_USERNAME }}
