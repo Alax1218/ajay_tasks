@@ -22,6 +22,9 @@ jobs:
         BASE_COMMIT=${{ github.event.before || 'HEAD^' }}
         git diff $BASE_COMMIT ${{ github.sha }} > changes.txt
 
+    - name: change.txt path
+      run: ls -l && pwd 
+
   sending-mail:
 
     runs-on: ubuntu-latest
