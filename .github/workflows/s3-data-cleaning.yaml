@@ -20,6 +20,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2 # Change to your desired region
 
-    - name: Delete old data in S3
-      run: |
-        aws s3 rm --recursive s3://testingbucket1252/  --exclude "*" --include "$(date -d '15 days ago' '+%Y-%m-%d')/*"
+      - name: Delete old data in S3
+        run: |
+          aws s3 rm --recursive s3://testingbucket1252/  --exclude "*" --include "$(date -d '15 days ago' '+%Y-%m-%d')/*"
