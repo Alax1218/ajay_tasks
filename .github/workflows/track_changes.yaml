@@ -22,7 +22,10 @@ jobs:
         BASE_COMMIT=${{ github.event.before || 'HEAD^' }}
         git diff $BASE_COMMIT ${{ github.sha }} > changes.txt
 
+  sending-mail:
 
+    steps:
+    
     - name: Send email notification
       uses: dawidd6/action-send-mail@v3  
       with:
