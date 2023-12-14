@@ -17,10 +17,10 @@ jobs:
 
     - name: Display changes
       run: |
-        echo "Changed files:"
-
+        
         BASE_COMMIT=${{ github.event.before || 'HEAD^' }}
-        git diff $BASE_COMMIT ${{ github.sha }}
+        git diff $BASE_COMMIT ${{ github.sha }} > change.txt
+        cat change.txt
 
 
 
