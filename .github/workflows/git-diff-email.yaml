@@ -24,7 +24,7 @@ jobs:
     - name: Generate git diff since last push
       run: |
         # write raw git diff in file
-        git diff --staged ${{ github.event.before }} ${{ github.sha }} > git.diff
+        git diff -c original new ${{ github.event.before }} ${{ github.sha }} > git.diff
       
         #git log --pretty=format:"%h - %an, %b : %ad" --date=local ${{ github.event.before }}...${{ github.sha }} > git.diff
         # convert raw git diff to html
