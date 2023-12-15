@@ -1,6 +1,6 @@
 name: S3 Data Cleanup
 
-on: push
+on: workflow_dispatch
   
 
 jobs:
