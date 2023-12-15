@@ -9,3 +9,5 @@ Hi Sir,
 
 This is tested file to send email notifications. Basically, this triggered pipeline, whoever done any changes in any file in the repo or can specify any file or dir.
 If you reading this notification mail, you can analysis what have changed and where. Thank you.
+
+checking the whatchanged command
