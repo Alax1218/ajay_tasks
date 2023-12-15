@@ -24,7 +24,7 @@ jobs:
     - name: Generate git diff since last push
       run: |
         # write raw git diff in file
-        git diff --name-only ${{ github.event.before }} ${{ github.sha }}  > git.diff
+        git diff --name-only ${{ github.event.before }} ${{ github.sha }}  > git.patch
       
         #git log --pretty=format:"%h - %an, %b : %ad, %h, %cn, %cd  %cr, %s" --date=local ${{ github.event.before }}..${{ github.sha }} >> git.diff
         # convert raw git diff to html
@@ -39,7 +39,7 @@ jobs:
         username: ${{ secrets.GMAIL_USERNAME }}
         password: ${{ secrets.GMAIL_PASSWORD }}
         subject: "Changes in the Repository"
-        body: file://git.diff
+        body: file://git.patch
         #body: |
           #git log --pretty=format:"%h - %an, %b : %ad" --date=local ${{ github.event.before }}..${{ github.sha }}
 
