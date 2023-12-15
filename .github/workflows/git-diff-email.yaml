@@ -38,7 +38,7 @@ jobs:
         username: ${{ secrets.GMAIL_USERNAME }}
         password: ${{ secrets.GMAIL_PASSWORD }}
         subject: "Changes in the Repository"
-          body: file://git.diff
+        body: file://git.diff
         #body: |
           #git log --pretty=format:"%h - %an, %b : %ad" --date=local ${{ github.event.before }}..${{ github.sha }}
 
