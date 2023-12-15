@@ -25,7 +25,7 @@ jobs:
       run: |
         # write raw git diff in file
         #git diff ${{ github.event.before }} ${{ github.sha }} #> git.diff
-        git log --pretty=format:"%h - %an, %b : %ad" --date=local ${{ github.event.before }}..${{ github.sha }}
+        git log --pretty=format:"%h - %an, %b : %ad" --date=local ${{ github.event.before }}..${{ github.sha }} > git.diff
         # convert raw git diff to html
         #git diff ${{ github.event.before }} ${{ github.sha }} | bash ./.github/diff2html.sh > email-body.html
         #zip -r diff.zip git.diff email-body.html
@@ -38,9 +38,9 @@ jobs:
         username: ${{ secrets.GMAIL_USERNAME }}
         password: ${{ secrets.GMAIL_PASSWORD }}
         subject: "Changes in the Repository"
-          #body: file://git.diff
-        body: |
-          git log --pretty=format:"%h - %an, %b : %ad" --date=local ${{ github.event.before }}..${{ github.sha }}
+          body: file://git.diff
+        #body: |
+          #git log --pretty=format:"%h - %an, %b : %ad" --date=local ${{ github.event.before }}..${{ github.sha }}
 
         to: ajlxmi1218@gmail.com   #${{ secrets.NOTIFICATION_EMAIL }}
         from: kumarsaini1th@gmail.com  #${{ secrets.SMTP_USERNAME }}
