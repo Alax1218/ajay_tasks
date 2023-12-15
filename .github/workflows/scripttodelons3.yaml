@@ -1,6 +1,6 @@
 name: Backup and Cleanup
 
-on: push
+on: workflow_dispatch
   
 jobs:
   backup-and-cleanup:
