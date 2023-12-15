@@ -1,6 +1,6 @@
 name: buket clening
 
-on: push
+on: workflow_dispatch
   
 
 jobs:
