@@ -46,7 +46,9 @@ jobs:
         #body: |
           #git log --pretty=format:"%h - %an, %b : %ad" --date=local ${{ github.event.before }}..${{ github.sha }}
 
-        to: ajlxmi1218@gmail.com   #${{ secrets.NOTIFICATION_EMAIL }}
+        to: |
+          ravi.dubey@truminds.com,  #${{ secrets.NOTIFICATION_EMAIL }}
+          ajay.saini@truminds.com
         from: kumarsaini1th@gmail.com  #${{ secrets.SMTP_USERNAME }}
         # Optional content type (defaults to text/plain):
         content_type: text/html
