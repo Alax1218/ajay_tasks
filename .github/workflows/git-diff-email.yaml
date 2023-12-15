@@ -25,7 +25,7 @@ jobs:
       run: |
         # write raw git diff in file
         #git diff ${{ github.event.before }} ${{ github.sha }}  > git.diff
-        git whatchanged -n 2 --oneline -p > git.diff
+        git whatchanged -n 2 --oneline %n > git.diff
        
       
         #git log --pretty=format:"%h - %an, %b : %ad, %h, %cn, %cd  %cr, %s" --date=local ${{ github.event.before }}..${{ github.sha }} >> git.diff
