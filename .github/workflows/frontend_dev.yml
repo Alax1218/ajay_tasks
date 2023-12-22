@@ -5,7 +5,7 @@ on: push
 jobs:
   tesging-docker-with-ecr:
     name: build and deploy
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
 
     steps: 
       - name: checkout repo
