@@ -1,0 +1,51 @@
+name: frontend_devWorkflow_testing
+
+on: push
+
+jobs:
+  tesging-docker-with-ecr:
+    name: build and deploy
+    runs-on: [self-hosted, Linux, x64, devrunner001]
+
+    steps: 
+      - name: checkout repo
+        uses: action/checkout@v2
+
+      - name: configure machine setup
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Login to ecr
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: build, tag, push image to ecr
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: frontend_testing
+          IMAGE_TAG: ${{ github.run_number }}
+
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+
+      - name: stop build
+        run: docker stop frontend_testing || true 
+
+      - name: deplpoyment
+        run: |
+          aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend_testing
+          docker pull 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend_testing:${{github.run_number}}
+          docker run -p 80:3000 --name frontend-testing -d 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend_testing:${{github.run_number}}
+
+
+  
+        
+        
+    
+    
+  
