@@ -5,7 +5,7 @@ on: push
 jobs:
   tesging-docker-with-ecr:
     name: build and deploy
-    runs-on: [self-hosted, Linux, x64, devrunner001]
+    runs-on: ubuntu:latest
 
     steps: 
       - name: checkout repo
@@ -14,9 +14,9 @@ jobs:
       - name: configure machine setup
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
 
       - name: Login to ecr
         id: login-ecr
