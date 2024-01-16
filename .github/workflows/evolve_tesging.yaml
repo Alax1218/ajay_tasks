@@ -1,6 +1,8 @@
 name: frontend_devWorkflow_testing
 
-on: push
+on:
+    push:
+        branches: main
 
 jobs:
     Staging-Build-Deploy_and_clear_workspace:
