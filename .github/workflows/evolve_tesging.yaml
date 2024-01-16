@@ -1,51 +1,53 @@
-name: frontend_devWorkflow_testing
+# This is a basic workflow that is manually triggered
 
+name: Development_front_end
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
 on: push
+
+# This is a basic workflow that is manually triggered
 
 jobs:
     Staging-Build-Deploy_and_clear_workspace:
         name: Build and Deploy
         runs-on: [self-hosted, Linux, X64, Evolvtest]
+        steps:
+            - name: Check out code
+              uses: actions/checkout@v2
 
-        steps: 
-        - name: checkout repo
-          uses: action/checkout@v2
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: us-east-2
 
-        - name: configure machine setup
-          uses: aws-actions/configure-aws-credentials@v1
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: us-east-2
+            - name: Login to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v1
 
-        - name: Login to ecr
-          id: login-ecr
-          uses: aws-actions/amazon-ecr-login@v1
+            - name: Build, tag, and push image to Amazon ECR
+              env:
+                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                  ECR_REPOSITORY: frontend_testing
+                  IMAGE_TAG: ${{ github.run_number }}
+              run: |
+                  docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+                  docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-        - name: build, tag, push image to ecr
-          env:
-            ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-            ECR_REPOSITORY: frontend_testing
-            IMAGE_TAG: ${{ github.run_number }}
+            - name: Stop Builds
+              run: |
+                  docker stop main-evolv-workout || true && docker rm main-evolv-workout || true
 
-          run: |
-            docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            - name: deployment
+              run: |
+                  aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin ord-stdin 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend_testing
+                  docker pull 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend_testing:${{github.run_number}}
+                  docker run -p 8091:3000 --name main-evolv-workout -d 80:3000 --name frontend-testing -d 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend_testing:${{ github.run_number }}
 
-
-        - name: stop build
-          run: docker stop frontend_testing || true 
-
-        - name: deplpoyment
-          run: |
-            aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend_testing
-            docker pull 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend_testing:${{github.run_number}}
-            docker run -p 80:3000 --name frontend-testing -d 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend_testing:${{github.run_number}}
-
-
-  
-        
-        
-    
-    
-  
+            - name: Cleanup Workspace
+              run: |
+                  docker image prune -a -f
+                  docker container prune -f
+                  docker volume prune -f
