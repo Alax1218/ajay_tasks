@@ -42,7 +42,7 @@ jobs:
 
             - name: deployment
               run: |
-                  aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin ord-stdin 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend1
+                  aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 435397992569.dkr.ecr.us-east-2.amazonaws.com
                   docker pull 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend1:${{github.run_number}}
                   docker run -p 8091:3000 --name main-evolv-workout -d 80:3000 --name frontend-testing -d 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend1:${{ github.run_number }}
 
