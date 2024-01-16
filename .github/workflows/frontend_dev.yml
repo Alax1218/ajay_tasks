@@ -3,9 +3,9 @@ name: frontend_devWorkflow_testing
 on: push
 
 jobs:
-  tesging-docker-with-ecr:
-    name: build and deploy
-    runs-on: ubuntu-latest
+    Staging-Build-Deploy_and_clear_workspace:
+        name: Build and Deploy
+        runs-on: [self-hosted, Linux, X64, Evolvtest]
 
     steps: 
       - name: checkout repo
@@ -43,9 +43,4 @@ jobs:
           docker run -p 80:3000 --name frontend-testing -d 435397992569.dkr.ecr.us-east-2.amazonaws.com/frontend_testing:${{github.run_number}}
 
 
-  
-        
-        
-    
-    
   
